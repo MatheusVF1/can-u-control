@@ -1,9 +1,28 @@
 import numpy as np
 
 from lands import *
-from main import *
 
-def calculate_distances(x, y, land, level, quant, dt, BonusX, BonusY):
+def maximum(land, level):
+    uMax = 10
+    if land == 1:
+        if level == 3 or level == 4:
+            uMax = 8
+    if land == 2:
+        if level == 2 or level == 4:
+            uMax = 10
+        elif level == 3:
+            uMax = 9
+    if land == 3:
+        if level == 2 or level == 4:
+            uMax = 8
+    if land == 4:
+        if level == 1 or level == 3:
+            uMax = 8
+        elif level == 4:
+            uMax = 10
+    return uMax
+
+def calculate_distances(x, y, land, level, quant, dt, BonusX, BonusY, SkullsX, SkullsY):
     bestDist = np.inf
     bestI = 0        
     uMax = maximum(land, level)
