@@ -1,32 +1,12 @@
 from websocket_server import WebsocketServer
 from lands import *
-from euler import calculate_distances
+from euler import *
 
 servidor = WebsocketServer(port=6660)
 passou = 0
 output = 0.0
 count = 0
 previous_level = 0
-
-def maximum(land, level):
-    uMax = 10
-    if land == 1:
-        if level == 3 or level == 4:
-            uMax = 8
-    if land == 2:
-        if level == 2 or level == 4:
-            uMax = 10
-        elif level == 3:
-            uMax = 9
-    if land == 3:
-        if level == 2 or level == 4:
-            uMax = 8
-    if land == 4:
-        if level == 1 or level == 3:
-            uMax = 8
-        elif level == 4:
-            uMax = 10
-    return uMax
 
 def convert_message(message):
     # Pega a mensagem recebida e separa ela para ser tratada e utilizada
