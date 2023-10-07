@@ -3,6 +3,7 @@ import numpy as np
 from lands import *
 
 def maximum(land, level):
+    # Calcula o valor máximo de `u` para a land e level dados.
     uMax = 10
     if land == 1:
         if level == 3 or level == 4:
@@ -31,9 +32,8 @@ def calculate_distances(x, y, land, level, quant, dt, BonusX, BonusY, SkullsX, S
     Args:
         x: A coordenada x do jogador.
         y: A coordenada y do jogador.
-        land: O objeto do terreno.
-        level: O objeto do nível.
-        quant: O fator de quantização.
+        land: Qual a ilha atual.
+        level: Qual o nivel atual.
         dt: O passo de tempo.
         BonusX: Uma lista de coordenadas x dos bônus.
         BonusY: Uma lista de coordenadas y dos bônus.
@@ -56,13 +56,14 @@ def calculate_distances(x, y, land, level, quant, dt, BonusX, BonusY, SkullsX, S
     # Para cada valor de `u` de `-uMax` a `uMax`, calcula a distância até todos os bônus simulando o movimento do jogador por `quant` passos de tempo.
 
     for i in range(-uMax, uMax + 1):
-
          # Calcula o valor de `u` atual dividido por `uMax`.
         valueUI = i / uMax
 
         # Inicializa a distância mínima até todos os bônus para o valor atual de `u` como infinito.
         minimumDistance = np.inf
         distance = np.inf
+
+        # posições de x e y
         x1 = x
         y1 = y
         u = valueUI
@@ -86,16 +87,20 @@ def calculate_distances(x, y, land, level, quant, dt, BonusX, BonusY, SkullsX, S
             x11 = x1
             y11 = y1
             u = valorUJ
+            # Simula o movimento do jogador por `quant` passos de tempo.
             for k in range(quant):
+                # Calcula a distância até o bônus mais próximo.
                 for q in range(len(BonusX)):
                     f = 1 if q == 0 else 2
                     distance = f*((x11 - BonusX[q])*(x11 - BonusX[q]) + (y11 - BonusY[q])*(y11 - BonusY[q]))
                     if (distance < minimumDistance): 
                         minimumDistance = distance
+                 # Atualiza a posição do jogador.
                 l12 = define_maps_equations(land, level, x11, y11, u)
                 x11 += l12[0]*dt
                 y11 += l12[1]*dt
 
+                # Se a distância mínima até todos os bônus for menor que a melhor distância, atualiza a melhor distância e o melhor valor de `u`.
                 if(minimumDistance < bestDist):
                     bestDist = minimumDistance
                     bestI = valueUI
